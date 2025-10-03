@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora Docker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora</h1>
+
+    <div class="inputs">
+      <input id="num1" type="number" placeholder="Número 1">
+      <select id="operacion">
+        <option value="sumar">+</option>
+        <option value="restar">-</option>
+        <option value="multiplicar">*</option>
+        <option value="dividir">/</option>
+      </select>
+      <input id="num2" type="number" placeholder="Número 2">
+    </div>
+
+    <div class="buttons">
+      <button id="btnCalcular">Calcular</button>
+      <button id="btnHistorial">Historial</button>
+    </div>
+
+    <h2>Resultado: <span id="resultado"></span></h2>
+
+    <h3>Historial</h3>
+    <ul id="historial"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

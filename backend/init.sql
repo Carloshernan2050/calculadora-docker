@@ -1,0 +1,10 @@
+CREATE DATABASE IF NOT EXISTS calculadora;
+USE calculadora;
+
+CREATE TABLE IF NOT EXISTS operaciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    a DOUBLE NOT NULL,
+    b DOUBLE NOT NULL,
+    operacion VARCHAR(10) NOT NULL,
+    resultado DOUBLE
+);

@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+  backend:
+    image: carloshernan2050/calculadora_backend:v1
+    container_name: calculadora_backend
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: calculadora
+    depends_on:
+      - db
+    networks:
+      - app_net
+
+  frontend:
+    image: carloshernan2050/calculadora_frontend:v1
+    container_name: calculadora_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    environment:
+      BACKEND_URL: http://10.7.55.226:5000
+    networks:
+      - app_net
+
+  db:
+    image: mysql:8.0
+    container_name: calculadora_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: calculadora
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app_net
+
+volumes:
+  db_data:
+
+networks:
+  app_net:
+    driver: bridge
