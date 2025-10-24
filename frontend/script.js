@@ -4,10 +4,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultado = document.getElementById("resultado");
   const historial = document.getElementById("historial");
 
-  // 🔹 API_URL apunta a la IP de tu host Docker
-  const API_URL = "http://10.7.55.226:5000";
+  // 🔹 Detecta automáticamente el host del backend
+  let API_URL;
 
-  // 🔹 Calcular
+  // Si estás accediendo desde la misma PC donde corre Docker
+  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+    API_URL = "http://localhost:5000";
+  } else {
+    // Para otras PCs en la LAN: usa la IP del host Docker
+    // ⚠️ Cambia "10.7.55.17" por la IP real del host si es diferente
+    API_URL = `http://${window.location.hostname}:5000`;
+  }
+
+  // 🔹 Función para calcular
   btnCalcular.addEventListener("click", async () => {
     const a = parseFloat(document.getElementById("num1").value);
     const b = parseFloat(document.getElementById("num2").value);
@@ -26,11 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
       resultado.innerText = data.resultado;
     } catch (err) {
       resultado.innerText = "Error al conectar con el backend";
-      console.error(err);
+      console.error("Fetch error:", err);
     }
   });
 
-  // 🔹 Historial
+  // 🔹 Función para obtener historial
   btnHistorial.addEventListener("click", async () => {
     try {
       const response = await fetch(`${API_URL}/historial`);
@@ -45,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     } catch (err) {
       historial.innerHTML = "<li>Error al obtener el historial</li>";
-      console.error(err);
+      console.error("Fetch error:", err);
     }
   });
 });
